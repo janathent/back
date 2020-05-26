@@ -13,6 +13,9 @@ public class BrowseService {
     BrowseDao browseDao;
 
 
+    public void storechathistory(String username,String browseid,String time){
+        browseDao.storechathistory(username,browseid,time);
+    }
 
 
 
