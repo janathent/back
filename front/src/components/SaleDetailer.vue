@@ -232,11 +232,23 @@
 
         //查找电话号码
         _this.axios.post('/findPhonebyusername',formData1,config).then(function (response) {
-          console.log(response.data);
           _this.phone = response.data
         }).catch(function (error) {
           console.log(error);
         })
+
+        //实现浏览记录存储
+        if(_this.$store.state.username !== "请登录"){
+          var formData2 = new FormData();
+          var currenttime = new Date();
+          formData2.append('username',_this.$store.state.username);
+          formData2.append('browseid',_this.$route.query.id);
+          formData2.append('time',currenttime.toLocaleString());
+          _this.axios.post('/storebrowse',formData2,config).then(function (response) {
+          }).catch(function (error) {
+            console.log(error);
+          })
+        }
 
         this.axios.post("/salemodifyshow",formData,config).then(function (response) {
           _this.title = response.data[0].title;
@@ -298,6 +310,10 @@
         //实现收藏功能
         collection:function () {
           var _this = this;
+          if(_this.$store.state.username === "请登录"){
+            alert("请先登录！");
+            return;
+          }
           if(_this.isshoucangvalue === true){
             _this.isshoucangvalue = false;
             //实现取消收藏

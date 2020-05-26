@@ -48,7 +48,6 @@
         this.form.password = '';
       },
     }
-
   }
 </script>
 
