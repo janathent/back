@@ -68,10 +68,10 @@ public class CollectionController {
         List<Sale> saleList = new ArrayList<Sale>();
         for (int i = 0 ; i < list.size() ;++i ){
             Integer id = Integer.parseInt(String.valueOf(list.get(i)));
-            saleList.add(saleService.findSaleById(id).get(0));
+            if(saleService.findSaleById(id).size() != 0){
+                saleList.add(saleService.findSaleById(id).get(0));
+            }
         }
         return saleList;
     }
-
-
 }

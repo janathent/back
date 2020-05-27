@@ -44,7 +44,7 @@ public class SaleController {
     @CrossOrigin
     @RequestMapping("/api/saleupload")
     @ResponseBody
-    public String saleupload(@RequestParam("image") MultipartFile[] file,@RequestParam("username") String username,
+    public Integer saleupload(@RequestParam("image") MultipartFile[] file,@RequestParam("username") String username,
     @RequestParam("title") String title,@RequestParam("loaction") String loaction,@RequestParam("shi") String shi,
                              @RequestParam("ting") String ting,@RequestParam("wei") String wei,@RequestParam("direction") String direction,
                              @RequestParam("layernumber") String layernumber, @RequestParam("layertotal") String layertotal,
@@ -117,7 +117,7 @@ public class SaleController {
         }
         sale.setPicpath(allfilename);
         saleService.addSale(sale);
-        return "ok";
+        return maxid + 1;
     }
 
 
