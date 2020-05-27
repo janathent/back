@@ -66,7 +66,6 @@
           };
           this.axios.post("saledelete",formData,config).then(function (response) {
             _this.init();
-            console.log(response.data);
             alert("删除成功");
           }).catch(function (error) {
             console.log(error);

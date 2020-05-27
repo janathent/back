@@ -439,7 +439,10 @@
 
 
               //房屋的特色
-              feature:''
+              feature:'',
+
+              //房屋在数据库的ID
+              maxid:''
 
 
 
@@ -469,6 +472,7 @@
           this.form.square = '' ; this.form.price = '' ; this.form.feature = ''
         },
         submit:function () {
+          var _this = this;
           if(this.form.title === '' || this.form.loaction === '' || this.form.shivalue === '' ||
             this.form.tingvalue === '' || this.form.weivalue === '' || this.form.directionvalue === '' || this.form.layernumbervalue === '' ||
             this.form.layertotalvalue === '' || this.form.decorationvalue === '' || this.form.heatvalue === '' || this.form.elevatorvalue === '' ||
@@ -504,18 +508,30 @@
             headers:{"Content-Type":"multipart/form-data"}
           };
           this.axios.post('/saleupload',formData,config).then(function (response) {
-            console.log(response.data);
-            if(response.data === "ok"){
+            console.log(response.data)
+            _this.form.maxid = response.data;
               alert("上传成功");
-            }
+              //储存房屋的价格日志
+              var formData1 = new FormData();
+              formData1.append('houserid',_this.form.maxid);
+              console.log(_this.form.maxid)
+              formData1.append('price',_this.form.price);
+              console.log(_this.form.price)
+              var time = new Date();
+              var timetemp = JSON.stringify(time.toLocaleString())
+              console.log(timetemp)
+              formData1.append('time',timetemp);
+              _this.axios.post('/storepricelog',formData1,config).then(function (response) {
+                console.log(response)
+              }).catch(function (error) {
+                console.log(error)
+              })
+
           }).catch(function (error) {
             console.log(error);
           })
 
 
-
-
-          //
           // //上传图片
           // var formData = new FormData();
           // console.log(this.form.fileList);

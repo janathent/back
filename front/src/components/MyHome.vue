@@ -16,7 +16,7 @@
           <template slot="title"><i class="el-icon-shopping-cart-2"></i>我想买的</template>
           <el-menu-item-group>
             <el-menu-item index="/mycollection" v-on:click="changetitle5" :disabled="collectionrecord">收藏纪录</el-menu-item>
-            <el-menu-item index="/salemanage" v-on:click="changetitle2" :disabled="browserrecord">浏览纪录</el-menu-item>
+            <el-menu-item index="/mybrowse" v-on:click="changetitle6" :disabled="browserrecord">浏览纪录</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
 
@@ -98,7 +98,6 @@
           };
           formData.append('username',_this.$store.state.username);
           _this.axios.post("/findauthoritybyusername",formData,config).then(function (response) {
-            console.log(response.data)
             if(response.data[0].houseupload === "0"){
               _this.houseupload = true;
             }else{
@@ -134,7 +133,6 @@
             }else{
               _this.mymessage = false;
             }
-            console.log(_this.mymessage)
           }).catch(function (error) {
             console.log(error)
           });
@@ -159,6 +157,9 @@
           },
           changetitle5:function () {
             this.$store.commit('changetitle',"我的收藏");
+          },
+          changetitle6:function () {
+            this.$store.commit('changetitle',"我的浏览记录");
           }
         }
     }

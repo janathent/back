@@ -7,7 +7,10 @@
             <el-input style="width: 220px" v-model="registerForm.username" placeholder="请输入用户名"></el-input>
           </el-form-item>
           <el-form-item label="密码">
-            <el-input style="width: 220px;" v-model="registerForm.password" placeholder="请输入密码" ></el-input>
+            <el-input type="password" style="width: 220px;" v-model="registerForm.password" placeholder="请输入密码" ></el-input>
+          </el-form-item>
+          <el-form-item label="再次输入">
+            <el-input type="password" style="width: 220px;" v-model="registerForm.password1" placeholder="请再次输入密码" ></el-input>
           </el-form-item>
           <el-form-item label="手机">
             <el-input style="width: 220px" v-model="registerForm.phone" placeholder="请输入手机号" ></el-input>
@@ -42,6 +45,7 @@
             registerForm: {
               username: '',
               password: '',
+              password1:'',
               phone: '',
               options: [{
                 value: '男',
@@ -86,6 +90,10 @@
           var _this = this;
           if(this.registerForm.username === '' || this.registerForm.password === '' || this.registerForm.phone === '' || this.registerForm.gender === '' || this.registerForm.birth === ''){
             alert("请填写完整");
+            return;
+          }
+          if(_this.registerForm.password !== _this.registerForm.password1){
+            alert("两次密码输入不一致，请重新输入！");
             return;
           }
     //      this.axios.post("/test",{p1:v1,p2:v2}).then(function (response) {console.log(response)}).catch(function (error) {console.log(error)})

@@ -17,6 +17,7 @@ import Manage from "../components/Manage";
 import ManageUser from "../components/ManageUser";
 import ManageModifyUser from "../components/ManageModifyUser";
 import ManageUserAuthority from "../components/ManageUserAuthority";
+import MyBrowse from "../components/MyBrowse";
 
 Vue.use(Router)
 
@@ -32,7 +33,7 @@ export default new Router({
         {path: "/showmain",component: ShowMain},
         {path: "/saledetailer",component: SaleDetailer},
         {path: "/test",component: Manage, children: [{path: "/manageuser" ,component: ManageUser},{path: "/managemodifyuser" ,component: ManageModifyUser},{path: "/manageuserauthority" ,component: ManageUserAuthority}]},
-        {path: "/myhome",component: MyHome, children: [{path: "/saleupload",component: SaleUpload},{path: "/salemanage",component: SaleManage},{path: "/salemodify",component: SaleModify},{path: "/personalinfomodify",component: PersonalInfoModify},{path: "/mymessage",component: MyMessage},{path: "/mycollection",component: MyCollection}]}]}
+        {path: "/myhome",component: MyHome, children: [{path: "/saleupload",component: SaleUpload},{path: "/salemanage",component: SaleManage},{path: "/salemodify",component: SaleModify},{path: "/personalinfomodify",component: PersonalInfoModify},{path: "/mymessage",component: MyMessage},{path: "/mycollection",component: MyCollection},{path: "/mybrowse",component: MyBrowse}]}]}
     // {
     //   path: '/register',
     //   name: 'Register',

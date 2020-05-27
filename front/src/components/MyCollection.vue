@@ -60,7 +60,6 @@
            headers:{"Content-Type":"multipart/form-data"}
          };
          _this.axios.post("/returnallcollection",formData,config).then(function (response) {
-           console.log(response)
            _this.list = response.data
          }).catch(function (error) {
            console.log(error)
