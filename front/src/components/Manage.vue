@@ -31,33 +31,7 @@
       </el-aside>
 
       <el-container>
-        <el-header style="text-align: right; font-size: 12px;background-color: #545c64;">
-          <strong style="float: left;margin-left: 40%;font-size: 26px;color: #fff">{{$store.state.bigtitle}}</strong>
-          <!--        <el-dropdown>-->
-          <!--          <i class="el-icon-setting" style="margin-right: 15px"></i>-->
-          <!--          <el-dropdown-menu slot="dropdown">-->
-          <!--            <el-dropdown-item>查看</el-dropdown-item>-->
-          <!--            <el-dropdown-item>新增</el-dropdown-item>-->
-          <!--            <el-dropdown-item>删除</el-dropdown-item>-->
-          <!--          </el-dropdown-menu>-->
-          <!--        </el-dropdown>-->
-          <div style="float: right;height: 50px;"> <span style="font-size: 12px;color: #fff">{{$store.state.username}}</span></div>
-          <div style="float: right;height: 50px;margin-right: 8px;margin-top: 10px">
-            <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
-          </div>
-
-
-        </el-header>
-
         <el-main>
-          <!--        <el-table :data="tableData">-->
-          <!--          <el-table-column prop="date" label="日期" width="140">-->
-          <!--          </el-table-column>-->
-          <!--          <el-table-column prop="name" label="姓名" width="120">-->
-          <!--          </el-table-column>-->
-          <!--          <el-table-column prop="address" label="地址">-->
-          <!--          </el-table-column>-->
-          <!--        </el-table>-->
           <router-view/>
         </el-main>
       </el-container>

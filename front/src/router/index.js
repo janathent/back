@@ -32,8 +32,8 @@ export default new Router({
         {path: "/register",component: Register},
         {path: "/showmain",component: ShowMain},
         {path: "/saledetailer",component: SaleDetailer},
-        {path: "/test",component: Manage, children: [{path: "/manageuser" ,component: ManageUser},{path: "/managemodifyuser" ,component: ManageModifyUser},{path: "/manageuserauthority" ,component: ManageUserAuthority}]},
-        {path: "/myhome",component: MyHome, children: [{path: "/saleupload",component: SaleUpload},{path: "/salemanage",component: SaleManage},{path: "/salemodify",component: SaleModify},{path: "/personalinfomodify",component: PersonalInfoModify},{path: "/mymessage",component: MyMessage},{path: "/mycollection",component: MyCollection},{path: "/mybrowse",component: MyBrowse}]}]}
+        {path: "/manage",component: Manage, children: [{path: "/manageuser" ,component: ManageUser},{path: "/managemodifyuser" ,component: ManageModifyUser},{path: "/manageuserauthority" ,component: ManageUserAuthority}]},
+        {path: "/myhome",component: MyHome, children: [{path: "/saleupload",component: SaleUpload},{path: "/salemanage",component: SaleManage},{path: "/salemodify",component: SaleModify},{path: "/personalinfomodify",component: PersonalInfoModify},{path: "/mymessage",component: MyMessage},{path: "/mycollection",component: MyCollection},{path: "/mybrowse",component: MyBrowse}]}]},
     // {
     //   path: '/register',
     //   name: 'Register',
@@ -74,11 +74,11 @@ export default new Router({
     //   name: 'mymessage',
     //   component:MyMessage
     // },
-    // {
-    //   path: '/mycollection',
-    //   name: 'mycollection',
-    //   component:MyCollection
-    // },
+    {
+      path: '/test',
+      name: 'test',
+      component:Test
+    },
     // {
     //   path: '/myhome',
     //   name: 'MyHome',

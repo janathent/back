@@ -159,9 +159,10 @@
 <!--          </div>-->
           <el-carousel :interval="4000" type="card" height="200px">
             <el-carousel-item v-for="item in form.urls" :key="item">
+              <div><i class="el-icon-delete" @click="deletepic(item)"></i></div>
               <h3 class="medium">
                 <div class="demo-image">
-                  <div class="block">
+                  <div class="block" >
                     <el-image style="width: 300px; height: 200px" :src="'../../static/housepic/' + item" :fit="fit"></el-image>
                   </div>
                 </div>
@@ -169,7 +170,6 @@
             </el-carousel-item>
           </el-carousel>
         </el-form-item>
-
 
         <el-form-item>
           <el-button type="success"  @click="modify" round>修改</el-button>
@@ -444,6 +444,7 @@
 
 
               //房屋面积
+              priceorginal:'',//原先的房屋价格储存
               square:'',
 
               //售价
@@ -458,7 +459,9 @@
               //图片
               urls: [
               ],
-            }
+            },
+            //图片的显示方式
+            fit:'fit',
           }
         },
       created() {
@@ -487,6 +490,7 @@
           _this.form.propertyrightsyearvalue = response.data[0].propertyrightsyear;
           _this.form.square = response.data[0].square;
           _this.form.price = response.data[0].price;
+          _this.form.priceorginal = _this.form.price;
           _this.form.feature = response.data[0].feature;
           _this.form.picnumber = response.data[0].picnumber;
           _this.form.picpath = response.data[0].picpath.substr(0,response.data[0].picpath.length - 1);
@@ -533,6 +537,21 @@
           let config ={
             headers:{"Content-Type":"multipart/form-data"}
           };
+          //若是价格不一样，储存价格日志
+          if(_this.form.priceorginal !== _this.form.price){
+            var formData1 = new FormData();
+            formData1.append('houseid',_this.$route.query.id)
+            formData1.append('price',_this.form.priceorginal);
+            var time = new Date();
+            var timetemp = time.toLocaleString();
+            formData1.append('time',timetemp);
+            _this.axios.post('/storepricelog',formData1,config).then(function (response) {
+              console.log(response)
+            }).catch(function (error) {
+              console.log(error)
+            })
+          }
+
           this.axios.post("/salemodifybyid",formData,config).then(function (response) {
             if(response.data === "ok"){
               alert("修改成功");
@@ -541,6 +560,45 @@
           }).catch(function (error) {
             console.log(error);
           })
+        },
+
+        //删除图片
+        deletepic:function (item) {
+          var _this = this;
+          _this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            //确定删除图片
+            var formData = new FormData();
+            formData.append("id",_this.$route.query.id);
+            let config ={
+              headers:{"Content-Type":"multipart/form-data"}
+            };
+            _this.axios.post('/salemodifyshow',formData,config).then(function (response) {
+              console.log(response.data[0].picpath)
+            }).catch(function (error) {
+              console.log(error)
+            })
+
+
+
+            console.log("成功！")
+            _this.$message({
+              type: 'success',
+              message: '删除成功!'
+            });
+          }).catch(() => {
+            //取消删除
+
+            console.log("失败！")
+            _this.$message({
+              type: 'info',
+              message: '已取消删除'
+            });
+          });
+
         }
 
       }

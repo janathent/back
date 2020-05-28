@@ -32,7 +32,6 @@
       onSubmit() {
        var _this = this;
          this.axios.post("/login",{username:this.form.username,password:this.form.password}).then(function (response) {
-           console.log(response.data);
            if(response.data.status === 500){
              alert("账户或密码错误！");
              return;
