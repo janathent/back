@@ -24,7 +24,4 @@ public class PriceLogController {
         System.out.println(time);
         priceLogService.storepricelog(houseid,price,time);
     }
-
-
-
 }
