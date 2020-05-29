@@ -9,7 +9,7 @@
           <el-form-item label="密码">
             <el-input type="password" style="width: 220px;" v-model="registerForm.password" placeholder="请输入密码" ></el-input>
           </el-form-item>
-          <el-form-item label="再次输入">
+          <el-form-item label="确认密码">
             <el-input type="password" style="width: 220px;" v-model="registerForm.password1" placeholder="请再次输入密码" ></el-input>
           </el-form-item>
           <el-form-item label="手机">
@@ -119,6 +119,7 @@
         clearall: function (){
           this.registerForm.username = '';
           this.registerForm.password = '';
+          this.registerForm.password1 = '';
           this.registerForm.phone = '';
           this.registerForm.gender = '';
           this.registerForm.birth = '';

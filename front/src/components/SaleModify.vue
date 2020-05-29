@@ -462,6 +462,7 @@
             },
             //图片的显示方式
             fit:'fit',
+            saleid:'',
           }
         },
       created() {
@@ -469,7 +470,8 @@
         // this.id = this.$route.query.id
         var _this = this;
         var formData = new FormData();
-        formData.append("id",this.$route.query.id);
+        _this.saleid = _this.$route.query.id;
+        formData.append("id",_this.$route.query.id);
         let config ={
           headers:{"Content-Type":"multipart/form-data"}
         };
@@ -572,28 +574,28 @@
           }).then(() => {
             //确定删除图片
             var formData = new FormData();
-            formData.append("id",_this.$route.query.id);
+            formData.append('deletepath',item);
+            formData.append('saleid',_this.$route.query.id);
             let config ={
               headers:{"Content-Type":"multipart/form-data"}
             };
-            _this.axios.post('/salemodifyshow',formData,config).then(function (response) {
-              console.log(response.data[0].picpath)
-            }).catch(function (error) {
-              console.log(error)
-            })
+            //存在图片就显示
+            if(_this.form.urls.length !== 0){
+              _this.axios.post('/saledeletepicandmodifysalepath',formData,config).then(function (response) {
+                _this.$router.push('/salemanage');
+              }).catch(function (error) {
+                console.log(error)
+              })
+            }
 
 
-
-            console.log("成功！")
             _this.$message({
               type: 'success',
               message: '删除成功!'
             });
           }).catch(() => {
             //取消删除
-
-            console.log("失败！")
-            _this.$message({
+              _this.$message({
               type: 'info',
               message: '已取消删除'
             });

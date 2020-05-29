@@ -3,8 +3,8 @@
   <div id="header">
     <el-menu  class="el-menu-demo" mode="horizontal"  background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" router>
       <el-menu-item>用户：<span>{{$store.state.username}}</span></el-menu-item>
-      <el-menu-item index="/myhome" v-if="$store.state.username != '请登录'">个人中心</el-menu-item>
-      <el-menu-item index="/showmain">首页</el-menu-item>
+      <el-menu-item index="/myhome" v-if="$store.state.username != '请登录'" @click.native="changetitle1">个人中心</el-menu-item>
+      <el-menu-item index="/showmain" @click.native="changetitle1">首页</el-menu-item>
       <el-submenu index="4">
         <template slot="title">登录注册</template>
         <el-menu-item index="/login">登录</el-menu-item>
@@ -61,8 +61,10 @@ export default {
       }else{
         _this.$router.push('/myhome')
       }
+    },
+    changetitle1:function () {
+      this.$store.commit('changetitle','')
     }
-
   }
 }
 </script>

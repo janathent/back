@@ -5,7 +5,6 @@
     <form action="#">
       <input type="submit" id="sub" value="搜索"/>
       <input type="text" id="text" value=""/>
-
     </form>
   </div>
   <ul>
