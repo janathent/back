@@ -11,7 +11,9 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+
 
 @Controller
 public class SaleController {
@@ -186,6 +188,47 @@ public class SaleController {
                                  @RequestParam("price") String price,@RequestParam("feature") String feature){
         saleService.updateSaleById(decoration,direction,elevator,feature,heat,housetype,layernumber,layertotal,loaction,price,propertyrightstype,propertyrightsyear,shi,square,ting,title,username,wei,id);
         return "ok";
+    }
+
+    //根据传来的要删除的图片信息删除图片，修改相应的数据的房屋数据表格,返回新的图片地址数据
+    @CrossOrigin
+    @RequestMapping("/api/saledeletepicandmodifysalepath")
+    @ResponseBody
+    public String saledeletepicandmodifysalepath(@RequestParam("deletepath") String deletepath,@RequestParam("saleid") Integer saleid){
+        List<Sale> list = saleService.findSaleById(saleid);
+        String returnpath = new String();
+        if(list.size() != 0){
+            Sale sale = list.get(0);
+            String orginpicpath = sale.getPicpath();
+            //去掉末尾的#
+            orginpicpath = orginpicpath.substring(0,orginpicpath.length() - 1);
+            String[] splicpath = orginpicpath.split("#");
+            //加入到链表比价好处理
+            for(int i = 0 ; i < splicpath.length ;++i){
+                int lastindex = splicpath[i].lastIndexOf("\\");
+                splicpath[i] = splicpath[i].substring(lastindex + 1,splicpath[i].length());
+            }
+            List<String> spilcestring = new ArrayList<>();
+            for(int i = 0 ; i < splicpath.length ;++i){
+                spilcestring.add(splicpath[i]);
+            }
+            int pos = spilcestring.indexOf(deletepath);
+            spilcestring.remove(pos);
+            String newpath = new String();
+            String pichead = "D:\\HouseTransactions\\graduate\\front\\static\\housepic";
+            for(int i = 0 ; i < spilcestring.size() ;++i){
+                newpath += pichead + "\\"+ spilcestring.get(i) + "#";
+            }
+            returnpath = newpath;
+            //根据id存储新的房屋地址
+            saleService.updatesalepicpathbyid(newpath,saleid);
+            //删除原来的图片
+            String deletepathfin = pichead + "\\" + deletepath;
+            File file = new File(deletepathfin);
+            file.delete();
+
+        }
+        return returnpath;
     }
 
 }

@@ -51,4 +51,10 @@ public interface SaleDao extends JpaRepository<Sale,Integer> {
     ,Integer id);
 
 
+    //ID修改房屋的图片地址
+    @Query(value = "update sale set sale.picpath=?1 where sale.id=?2 ", nativeQuery = true)
+    @Modifying
+    public void updatesalepicpathbyid(String picpath,Integer id);
+
+
 }

@@ -19,9 +19,6 @@ public class PriceLogController {
     @RequestMapping("api/storepricelog")
     @ResponseBody
     public void storepricelog(@RequestParam("houseid") String houseid,@RequestParam("price") String price,@RequestParam("time") String time){
-        System.out.println(houseid);
-        System.out.println(price);
-        System.out.println(time);
         priceLogService.storepricelog(houseid,price,time);
     }
 }

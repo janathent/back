@@ -60,4 +60,10 @@ public class SaleService {
         saleDao.updateSaleById(decoration,direction,elevator,feature,heat,housetype,layernumber,layertotal,loaction,
                 price,propertyrightstype,propertyrightsyear,shi,square,ting,title,username,wei,id);
     }
+
+
+    public void updatesalepicpathbyid(String picpath,Integer id){
+        saleDao.updatesalepicpathbyid(picpath,id);
+    }
+
 }
