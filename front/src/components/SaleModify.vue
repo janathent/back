@@ -171,6 +171,24 @@
           </el-carousel>
         </el-form-item>
 
+        <el-row>
+          <el-col :span="24">
+            <el-form-item label="图片上传" >
+              <div>
+                <el-upload action="https://jsonplaceholder.typicode.com/posts/"
+                           :auto-upload="false" list-type="picture-card" :on-preview="handlePictureCardPreview" :on-remove="handleRemove" :on-change="changefilelist">
+                  <i class="el-icon-plus"></i>
+                </el-upload>
+                <el-dialog :visible.sync="form.dialogVisible">
+                  <img width="100%" :src="form.dialogImageUrl" alt="">
+                </el-dialog>
+              </div>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+
+
         <el-form-item>
           <el-button type="success"  @click="modify" round>修改</el-button>
           <el-button v-on:click="clearall" round>清空</el-button>
@@ -459,10 +477,19 @@
               //图片
               urls: [
               ],
+
+              //上传文件
+              dialogImageUrl: '',
+              dialogVisible: false
+
+
+
             },
             //图片的显示方式
             fit:'fit',
             saleid:'',
+            //将要上传的图片文件的raw
+            allfileraw:''
           }
         },
       created() {
@@ -507,6 +534,20 @@
         })
       },
       methods: {
+
+          //图片显示文件
+        handleRemove(file, fileList) {
+          console.log(file, fileList);
+        },
+        handlePictureCardPreview(file) {
+          console.log(file)
+          this.form.dialogImageUrl = file.url;
+          this.form.dialogVisible = true;
+        },
+        changefilelist: function (file,fileList) {
+          this.allfileraw = fileList
+        },
+
         clearall: function(){
           this.form.title = '' ; this.form.loaction = '' ; this.form.shivalue = '' ;
           this.form.tingvalue = '' ; this.form.weivalue = '' ; this.form.directionvalue = '' ; this.form.layernumbervalue = '' ;
@@ -554,7 +595,7 @@
             })
           }
 
-          this.axios.post("/salemodifybyid",formData,config).then(function (response) {
+          _this.axios.post("/salemodifybyid",formData,config).then(function (response) {
             if(response.data === "ok"){
               alert("修改成功");
               _this.$router.push('/salemanage');
@@ -562,6 +603,20 @@
           }).catch(function (error) {
             console.log(error);
           })
+
+          //若是问价修改了，就单独的上传文件处理
+          if(_this.allfileraw.length !== 0){
+            var formData1 = new FormData();
+            for(let item of _this.allfileraw){
+              formData1.append('image',item.raw);
+            }
+            formData1.append('id',_this.saleid);
+            _this.axios.post('/addpicbysaleid',formData1,config).then(function (response) {
+              console.log(response)
+            }).catch(function (error) {
+              console.log(error)
+            })
+          }
         },
 
         //删除图片

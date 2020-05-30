@@ -39,7 +39,6 @@
 
         //移出第一个聊天对象（null）
         _this.chathistory.pop()
-
         //定时刷新任务
         _this.timer = setInterval(()=>{
 
