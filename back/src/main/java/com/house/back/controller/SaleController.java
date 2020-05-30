@@ -231,4 +231,50 @@ public class SaleController {
         return returnpath;
     }
 
+
+    @CrossOrigin
+    @RequestMapping("/api/addpicbysaleid")
+    @ResponseBody
+    public void addpicbysaleid(@RequestParam("image") MultipartFile[] files,@RequestParam("id") Integer id) throws IOException {
+        String orginalpicpath = saleService.findSaleById(id).get(0).getPicpath();
+        if(orginalpicpath.length() != 0){
+            int lastindexofdot = orginalpicpath.lastIndexOf(".");
+            int lastindexofglideline = orginalpicpath.lastIndexOf("_");
+            int lastsecondindexofglideline = 0;
+            int lastindexofslash = orginalpicpath.lastIndexOf("\\");
+            Integer currentpicnum = Integer.parseInt(orginalpicpath.substring(lastindexofglideline + 1 ,lastindexofdot));
+            for(int i = lastindexofglideline - 1 ; i >= 0 ; --i){
+                if (orginalpicpath.charAt(i) == '_'){
+                    lastsecondindexofglideline = i;
+                    break;
+                }
+            }
+
+            int currentsaleid = Integer.parseInt(orginalpicpath.substring(lastsecondindexofglideline + 1,lastindexofglideline));
+            String username = orginalpicpath.substring(lastindexofslash + 1,lastsecondindexofglideline);
+
+            String filePath1 = "D:\\HouseTransactions\\graduate\\front\\static\\housepic" ;
+            for (int i = 0 ; i < files.length ;++i){
+                String filerealname = files[i].getOriginalFilename();
+                int pointindex = filerealname.lastIndexOf(".");
+                String filesuffix =  filerealname.substring(pointindex);
+                String newfilename = username + "_" + currentsaleid + "_" + (i + currentpicnum + 1) + filesuffix;
+                orginalpicpath += filePath1 + "\\" + newfilename + "#";
+                File savefile = new File(filePath1 + "\\" + newfilename);
+                files[i].transferTo(savefile);
+            }
+            //更新数据库表格的图片
+            saleService.updatesalepicpathbyid(orginalpicpath,id);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
 }
