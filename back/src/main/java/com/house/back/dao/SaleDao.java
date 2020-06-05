@@ -56,5 +56,16 @@ public interface SaleDao extends JpaRepository<Sale,Integer> {
     @Modifying
     public void updatesalepicpathbyid(String picpath,Integer id);
 
+    //ID修改房屋的图片数量
+    @Query(value = "update sale set sale.picnumber=?1 where sale.id=?2 ", nativeQuery = true)
+    @Modifying
+    public void updatesalepicnumpathbyid(String orginpicnum,Integer id);
+
+
+    //搜索模糊搜索
+    @Query(value = "select * from sale where sale.title = ?1 or sale.square = ?1 or sale.direction = ?1 or sale.layernumber = ?1 or sale.layertotal = ?1 or sale.loaction = ?1", nativeQuery = true)
+    @Modifying
+    public List<Sale> searchshowmain(String searchitem);
+
 
 }

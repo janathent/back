@@ -226,7 +226,9 @@ public class SaleController {
             String deletepathfin = pichead + "\\" + deletepath;
             File file = new File(deletepathfin);
             file.delete();
-
+            String originpicnum = sale.getPicnumber();
+            String newpicnum = Integer.toString(Integer.parseInt(originpicnum) - 1);
+            saleService.updatesalepicnumpathbyid(newpicnum,saleid);
         }
         return returnpath;
     }
@@ -237,6 +239,7 @@ public class SaleController {
     @ResponseBody
     public void addpicbysaleid(@RequestParam("image") MultipartFile[] files,@RequestParam("id") Integer id) throws IOException {
         String orginalpicpath = saleService.findSaleById(id).get(0).getPicpath();
+        Integer orginalpicnum = Integer.parseInt(saleService.findSaleById(id).get(0).getPicnumber());
         if(orginalpicpath.length() != 0){
             int lastindexofdot = orginalpicpath.lastIndexOf(".");
             int lastindexofglideline = orginalpicpath.lastIndexOf("_");
@@ -265,16 +268,17 @@ public class SaleController {
             }
             //更新数据库表格的图片
             saleService.updatesalepicpathbyid(orginalpicpath,id);
+            String newpicnum = Integer.toString(orginalpicnum + files.length);
+            saleService.updatesalepicnumpathbyid(newpicnum,id);
         }
     }
 
-
-
-
-
-
-
-
-
+    @CrossOrigin
+    @RequestMapping("/api/searchshowmain")
+    @ResponseBody
+    public List<Sale> searchshowmain(@RequestParam("searchitem") String searchitem){
+        List<Sale> list = saleService.searchshowmain(searchitem);
+        return list;
+    }
 
 }

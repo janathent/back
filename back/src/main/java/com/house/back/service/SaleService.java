@@ -62,8 +62,21 @@ public class SaleService {
     }
 
 
+    //更新房屋属性数据
     public void updatesalepicpathbyid(String picpath,Integer id){
         saleDao.updatesalepicpathbyid(picpath,id);
     }
+
+    public void updatesalepicnumpathbyid(String picnum,Integer id){
+        saleDao.updatesalepicnumpathbyid(picnum,id);
+    }
+
+
+    public List<Sale> searchshowmain(String searchitem){
+        List<Sale> list = saleDao.searchshowmain(searchitem);
+        return list;
+    }
+
+
 
 }
