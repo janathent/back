@@ -11,6 +11,8 @@ import axios from 'axios';
 import VueAxios from "vue-axios";
 
 import store from "./store";
+import VCharts from 'v-charts'
+Vue.use(VCharts)
 
 Vue.config.productionTip = false
 Vue.use(ElementUI);

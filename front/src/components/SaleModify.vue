@@ -622,7 +622,7 @@
         //删除图片
         deletepic:function (item) {
           var _this = this;
-          _this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+          _this.$confirm('此操作将永久删除该图片, 是否继续?', '提示', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
             type: 'warning'
@@ -637,16 +637,14 @@
             //存在图片就显示
             if(_this.form.urls.length !== 0){
               _this.axios.post('/saledeletepicandmodifysalepath',formData,config).then(function (response) {
-                _this.$router.push('/salemanage');
+
               }).catch(function (error) {
                 console.log(error)
               })
             }
-
-
             _this.$message({
               type: 'success',
-              message: '删除成功!'
+              message: '删除成功,重新进入刷新!'
             });
           }).catch(() => {
             //取消删除

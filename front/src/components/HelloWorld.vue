@@ -11,7 +11,6 @@
         <el-menu-item index="/register">注册</el-menu-item>
       </el-submenu>
       <el-menu-item index="/manage" >管理员</el-menu-item>
-      <el-menu-item index="6"></el-menu-item>
 
       <strong style="float:left;margin-left:10%;margin-top:10px;font-size: 26px;color: #fff">{{$store.state.bigtitle}}</strong>
       <div style="float: right;margin-top: 20px;margin-right: 35px" v-if="$store.state.username != '请登录'"> <span style="font-size: 12px;color: #fff">{{$store.state.username}}</span></div>

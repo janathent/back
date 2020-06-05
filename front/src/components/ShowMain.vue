@@ -2,9 +2,9 @@
 
 <div class="container">
   <div id="wrap">
-    <form action="#">
-      <input type="submit" id="sub" value="搜索"/>
-      <input type="text" id="text" value=""/>
+    <form>
+      <input @click="searchfun" type="submit" id="sub" value="搜索"/>
+      <input v-model="searchitem" type="text" id="text" value=""/>
     </form>
   </div>
   <ul>
@@ -38,7 +38,9 @@
           url: '../../static/house.jpg',
           urls:[],
           list:'',
-          test:''
+          test:'',
+          //搜索的内容
+          searchitem:''
         };
       },
       created() {
@@ -48,6 +50,7 @@
           init: function () {
             var _this = this;
             this.axios.post('/saleshow').then(function (response) {
+              console.log(response)
               _this.list = response.data;
             //  "D:\HouseTransactions\graduate\front\static\housepic\黄和龙_2_0.JPG#"
               for(var i = 0 ; i < response.data.length ;++i){
@@ -59,6 +62,35 @@
                 console.log(error);
             })
           },
+        searchfun:function () {
+            var _this = this;
+            if(_this.searchitem === ''){
+              alert("请正确输入");
+              return;
+            }else{
+              var formData = new FormData();
+              formData.append('searchitem',_this.searchitem);
+              let config ={
+                headers:{"Content-Type":"multipart/form-data"}
+              };
+              _this.axios.post('/searchshowmain',formData,config).then(function (response) {
+                if(response.data.length === 0){
+                  alert("没有符合结果的房屋");
+                  return;
+                }else {
+                  _this.list = response.data;
+                  for(var i = 0 ; i < response.data.length ;++i){
+                    var pos = response.data[i].picpath.lastIndexOf("\\");
+                    // _this.urls.push();
+                    _this.list[i].picpath = response.data[i].picpath.substr(pos + 1,response.data[i].picpath.length - pos - 2);
+                  }
+                }
+
+              }).catch(function (error) {
+                console.log(error)
+              })
+            }
+        }
       }
     }
 </script>

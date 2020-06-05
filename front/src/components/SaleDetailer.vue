@@ -6,7 +6,7 @@
       <div id="search" style="float: left; width: 300px; margin-left: 200px; margin-top:20px">
         <el-input v-model="input" placeholder="搜索房源"></el-input>
       </div>
-      <el-button icon="el-icon-search" circle style="float: left ;margin-top: 20px ;margin-left: 10px"></el-button>
+      <el-button icon="el-icon-search" circle style="float: left ;margin-top: 20px ;margin-left: 10px" @click="searchfun"></el-button>
       <div id="button" style="float: right ; margin-right: 10px ; margin-top: 20px"><el-button  type="success" @click="fabu">立刻发布</el-button></div>
     </div>
     <div style="height: 20px;background-color: #99a9bf">
@@ -105,7 +105,7 @@
     </div>
 
     <!--大图-->
-    <div id="huxing" style="width: 100%;float:left;">
+    <div id="huxing" style="width: 100%;float:left;" @click="clearoverflow">
       <div style="height: 40px;float:left;width: 100%;text-align: left"><strong style="margin-left: 20px;font-size: 25px"><i class="el-icon-caret-right"></i>图片详情</strong></div>
       <div id="picture" style="float:left;margin-left: 20%; width: 60%;">
         <div class="demo-image__lazy">
@@ -198,7 +198,7 @@
             messageto:''  ,//聊天室传用户的名称
             chatall:'', //存储所有的聊天记录
          //   chatnumber:0,  //记录现在在框内的聊天数据条数
-            phone:''  //用户电话
+            phone:'' , //用户电话,
           }
         },
       created() {
@@ -295,8 +295,15 @@
         }).catch(function (error) {
           console.log(error);
         })
+        //储存下整体的房屋点击数据
+        var formData3 = new FormData();
+        var time = new Date();
+        formData3.append('time',time.toLocaleDateString());
+        _this.axios.post('/storebrowseallnumber',formData3,config).then(function (response) {
 
-
+        }).catch(function (error) {
+          console.log(error)
+        })
 
       },
       methods:{
@@ -477,6 +484,29 @@
               message: '已取消删除'
             });
           });
+        },
+        searchfun:function () {
+          var _this = this;
+          if(_this.input === ''){
+            alert("请正确输入");
+            return;
+          }else{
+            var formData = new FormData();
+            formData.append('searchitem',_this.input);
+            let config ={
+              headers:{"Content-Type":"multipart/form-data"}
+            };
+            _this.axios.post('/searchshowmain',formData,config).then(function (response) {
+              if(response.data.length === 0){
+                alert("没有符合结果的房屋");
+                return;
+              }else {
+                console.log(response.data)
+              }
+            }).catch(function (error) {
+              console.log(error)
+            })
+          }
         }
       },
       // mounted() {

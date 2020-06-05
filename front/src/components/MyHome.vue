@@ -3,7 +3,7 @@
 <div>
   <el-container style="height:700px; border: 1px solid #eee">
     <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
-      <el-menu :default-openeds="['1', '']" router>
+      <el-menu :default-openeds="['1', '2','3','4']" router>
         <el-submenu index="1">
           <template slot="title"><i class="el-icon-s-goods"></i>我想卖的</template>
           <el-menu-item-group>
@@ -33,7 +33,6 @@
             <el-menu-item index="/mymessage" v-on:click="changetitle4" :disabled="mymessage">我的消息</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
-
       </el-menu>
     </el-aside>
 

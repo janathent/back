@@ -2,7 +2,7 @@
   <div>
     <el-container style="height: 700px; border: 1px solid #eee">
       <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
-        <el-menu :default-openeds="['1']" router>
+        <el-menu :default-openeds="['1','2','3']" router>
           <el-submenu index="1">
             <template slot="title"><i class="el-icon-s-custom"></i>用户管理</template>
             <el-menu-item-group>
@@ -12,17 +12,17 @@
           </el-submenu>
 
           <el-submenu index="2">
-            <template slot="title"><i class="el-icon-message"></i>房屋管理</template>
+            <template slot="title"><i class="el-icon-s-home"></i>房屋管理</template>
             <el-menu-item-group>
-              <el-menu-item index="2-1">选项1</el-menu-item>
+              <el-menu-item index="/manageshowsale"  @click="changetitle3">房屋修改</el-menu-item>
               <el-menu-item index="2-2">选项2</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
 
           <el-submenu index="3">
-            <template slot="title"><i class="el-icon-message"></i>导航三</template>
+            <template slot="title"><i class="el-icon-message"></i>系统数据</template>
             <el-menu-item-group>
-              <el-menu-item index="3-1">选项1</el-menu-item>
+              <el-menu-item index="/manageuseraccesschart">访问流量</el-menu-item>
               <el-menu-item index="3-2">选项2</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
@@ -53,6 +53,9 @@
           },
         changetitle2:function () {
           this.$store.commit('changetitle',"用户权限管理");
+        },
+        changetitle3:function () {
+            this.$store.commit('changetitle','用户房屋修改')
         }
 
       }

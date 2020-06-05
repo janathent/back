@@ -1,39 +1,61 @@
 <template>
   <div>
-    <el-upload
-      action="https://jsonplaceholder.typicode.com/posts/" list-type="picture-card" :on-preview="handlePictureCardPreview" :on-remove="handleRemove" :auto-upload="false" :on-change="addfilelist">
-      <i class="el-icon-plus"></i>
-    </el-upload>
-    <el-dialog :visible.sync="dialogVisible">
-      <img width="100%" :src="dialogImageUrl" alt="">
-    </el-dialog>
+    <ve-line :data="chartData" :settings="chartSettings"></ve-line>
   </div>
 </template>
 
 <script>
   export default {
-    data() {
-      return{
-        dialogImageUrl: '',
-        dialogVisible: false
+    data () {
+
+      return {
+        chartSettings :{
+          metrics: ['访问用户']
+        },
+        chartData: {
+          columns: ['日期', '访问用户'],
+          rows: [
+            // { '日期': '2018-05-22',  '访问用户': 19810 },
+            // { '日期': '2018-05-23',  '访问用户': 4398 },
+            // { '日期': '2018-05-24',  '访问用户': 52910 }
+          ]
+        },
+        //存储数据
+        list:'',
       }
     },
     created() {
-
+      var _this = this;
+      _this.axios.post('/returnallbrowseallnumber').then(function (response) {
+        _this.list = response.data;
+        for (var i = 0 ; i < response.data.length ; ++i){
+          var obj = {'日期':response.data[i].time, '访问用户': response.data[i].number};
+          _this.chartData.rows.push(obj)
+        }
+        console.log(response)
+      }).catch(function (error) {
+        console.log(error)
+      })
     }
     ,
     methods:{
-      handleRemove(file, fileList) {
-        console.log(file, fileList);
-      },
-      handlePictureCardPreview(file) {
-        console.log(file)
-        this.dialogImageUrl = file.url;
-        this.dialogVisible = true;
-      },
-      addfilelist:function (file,fileList) {
+      fun:function () {
+        var _this = this;
+        var time = new Date();
+        var obj = {'日期':time.toLocaleDateString(), '访问用户': 30};
+        _this.chartData.rows.push(obj)
+        var formData = new FormData();
+        formData.append('time',time.toLocaleDateString());
+        let config ={
+          headers:{"Content-Type":"multipart/form-data"}
+        };
+        _this.axios.post('/storebrowseallnumber',formData,config).then(function (response) {
 
+        }).catch(function (error) {
+          console.log(error)
+        })
       }
+
     }
 
   }
